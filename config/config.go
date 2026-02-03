@@ -3,10 +3,10 @@ package config
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	goutils "github.com/jkaninda/go-utils"
 	"github.com/jkaninda/goma-admin/util"
-	"github.com/jkaninda/logger"
 	"github.com/jkaninda/okapi"
 	"github.com/jkaninda/okapi/okapicli"
 	"github.com/joho/godotenv"
@@ -43,7 +43,42 @@ func New(app *okapi.Okapi, cli *okapicli.CLI) (*Config, error) {
 			AllowedOrigins: strings.Split(goutils.Env("CORS_ALLOWED_ORIGINS", "http://localhost:5173"), ","),
 		},
 		JWT: JWTConfig{
-			Secret: goutils.Env("JWT_SECRET", "default-secret-key"),
+			Secret:          goutils.Env("JWT_SECRET", "default-secret-key"),
+			Issuer:          goutils.Env("JWT_ISSUER", "goma-admin"),
+			Audience:        goutils.Env("JWT_AUDIENCE", "goma-admin"),
+			AccessTokenTTL:  envDuration("JWT_ACCESS_TOKEN_TTL", "15m"),
+			RefreshTokenTTL: envDuration("JWT_REFRESH_TOKEN_TTL", "168h"),
+		},
+		Auth: AuthConfig{
+			AllowFirstAdmin:      goutils.EnvBool("AUTH_ALLOW_FIRST_ADMIN", false),
+			RequireVerifiedEmail: goutils.EnvBool("AUTH_REQUIRE_VERIFIED_EMAIL", false),
+			PasswordPolicy: PasswordPolicyConfig{
+				MinLength:      goutils.EnvInt("PASSWORD_MIN_LENGTH", 12),
+				MaxLength:      goutils.EnvInt("PASSWORD_MAX_LENGTH", 128),
+				RequireUpper:   goutils.EnvBool("PASSWORD_REQUIRE_UPPER", true),
+				RequireLower:   goutils.EnvBool("PASSWORD_REQUIRE_LOWER", true),
+				RequireNumber:  goutils.EnvBool("PASSWORD_REQUIRE_NUMBER", true),
+				RequireSpecial: goutils.EnvBool("PASSWORD_REQUIRE_SPECIAL", true),
+			},
+			OAuth: OAuthConfig{
+				Google: OAuthProviderConfig{
+					ClientID:     goutils.Env("OAUTH_GOOGLE_CLIENT_ID", ""),
+					ClientSecret: goutils.Env("OAUTH_GOOGLE_CLIENT_SECRET", ""),
+					RedirectURL:  goutils.Env("OAUTH_GOOGLE_REDIRECT_URL", ""),
+					AuthURL:      goutils.Env("OAUTH_GOOGLE_AUTH_URL", ""),
+					TokenURL:     goutils.Env("OAUTH_GOOGLE_TOKEN_URL", ""),
+					UserInfoURL:  goutils.Env("OAUTH_GOOGLE_USERINFO_URL", ""),
+				},
+				GitHub: OAuthProviderConfig{
+					ClientID:     goutils.Env("OAUTH_GITHUB_CLIENT_ID", ""),
+					ClientSecret: goutils.Env("OAUTH_GITHUB_CLIENT_SECRET", ""),
+					RedirectURL:  goutils.Env("OAUTH_GITHUB_REDIRECT_URL", ""),
+					AuthURL:      goutils.Env("OAUTH_GITHUB_AUTH_URL", ""),
+					TokenURL:     goutils.Env("OAUTH_GITHUB_TOKEN_URL", ""),
+					UserInfoURL:  goutils.Env("OAUTH_GITHUB_USERINFO_URL", ""),
+					EmailsURL:    goutils.Env("OAUTH_GITHUB_EMAILS_URL", ""),
+				},
+			},
 		},
 		Log: LogConfig{
 			Level: goutils.Env("LOG_LEVEL", "info"),
@@ -62,8 +97,12 @@ func (c *Config) validate() error {
 	if c.Server.Port == 0 {
 		return fmt.Errorf("PORT is required")
 	}
+	if c.JWT.Secret == "" {
+		return fmt.Errorf("JWT_SECRET is required")
+	}
 	return nil
 }
+
 func (c *Config) initialize(app *okapi.Okapi) error {
 	if err := c.validate(); err != nil {
 		return err
@@ -71,7 +110,7 @@ func (c *Config) initialize(app *okapi.Okapi) error {
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=%s", c.Database.dbHost, c.Database.dbUser, c.Database.dbPassword, c.Database.dbName, c.Database.dbPort, c.Database.dbSslMode)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		logger.Fatal("Failed to connect to database", "error", err)
+		return err
 	}
 	c.Database.DB = db
 	// Init Doc
@@ -83,4 +122,17 @@ func (c *Config) initialize(app *okapi.Okapi) error {
 	}
 	app.WithPort(c.Server.Port)
 	return nil
+}
+
+func envDuration(key, fallback string) time.Duration {
+	raw := goutils.Env(key, fallback)
+	parsed, err := time.ParseDuration(raw)
+	if err == nil {
+		return parsed
+	}
+	parsed, err = time.ParseDuration(fallback)
+	if err == nil {
+		return parsed
+	}
+	return 15 * time.Minute
 }

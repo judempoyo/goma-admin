@@ -7,6 +7,7 @@ import (
 
 	"github.com/jkaninda/goma-admin/config"
 	"github.com/jkaninda/goma-admin/routes"
+	"github.com/jkaninda/goma-admin/store"
 	"github.com/jkaninda/logger"
 	"github.com/jkaninda/okapi"
 	"github.com/jkaninda/okapi/okapicli"
@@ -21,6 +22,9 @@ func main() {
 	if err != nil {
 		logger.Fatal("Failed to initialize config", "error", err)
 
+	}
+	if err := store.AutoMigrate(conf.Database.DB); err != nil {
+		logger.Fatal("Failed to run migrations", "error", err)
 	}
 
 	// Create the route instance

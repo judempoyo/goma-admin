@@ -1,6 +1,8 @@
 package config
 
 import (
+	"time"
+
 	"gorm.io/gorm"
 )
 
@@ -10,6 +12,7 @@ type Config struct {
 	Server   ServerConfig
 	Cors     CorsConfig
 	JWT      JWTConfig
+	Auth     AuthConfig
 	Log      LogConfig
 }
 
@@ -39,9 +42,44 @@ type CorsConfig struct {
 }
 
 type JWTConfig struct {
-	Secret string
+	Secret          string
+	Issuer          string
+	Audience        string
+	AccessTokenTTL  time.Duration
+	RefreshTokenTTL time.Duration
 }
 
 type LogConfig struct {
 	Level string
+}
+
+type AuthConfig struct {
+	AllowFirstAdmin      bool
+	RequireVerifiedEmail bool
+	PasswordPolicy       PasswordPolicyConfig
+	OAuth                OAuthConfig
+}
+
+type PasswordPolicyConfig struct {
+	MinLength      int
+	MaxLength      int
+	RequireUpper   bool
+	RequireLower   bool
+	RequireNumber  bool
+	RequireSpecial bool
+}
+
+type OAuthConfig struct {
+	Google OAuthProviderConfig
+	GitHub OAuthProviderConfig
+}
+
+type OAuthProviderConfig struct {
+	ClientID     string
+	ClientSecret string
+	RedirectURL  string
+	AuthURL      string
+	TokenURL     string
+	UserInfoURL  string
+	EmailsURL    string
 }
