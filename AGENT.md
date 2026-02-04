@@ -16,11 +16,11 @@ Goma Admin is a Go backend (Okapi) with a stubbed Vue 3 UI. The entry point is `
 3. OpenAPI docs are enabled when `ENABLE_DOCS=true`.
 
 ## Env and config
-- `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `DB_PORT`, `DB_SSL_MODE` for Postgres.
-- `REDIS_URL` must be non-empty or config validation fails.
-- `PORT` overrides the CLI `--port` default.
-- `CORS_ALLOWED_ORIGINS` is comma-separated.
-- `JWT_SECRET` and `LOG_LEVEL` are optional.
+- `GOMA_DB_HOST`, `GOMA_DB_USER`, `GOMA_DB_PASSWORD`, `GOMA_DB_NAME`, `GOMA_DB_PORT`, `GOMA_DB_SSL_MODE` for Postgres.
+- `GOMA_REDIS_URL` must be non-empty or config validation fails.
+- `GOMA_PORT` overrides the CLI `--port` default.
+- `GOMA_CORS_ALLOWED_ORIGINS` is comma-separated.
+- `GOMA_JWT_SECRET` and `GOMA_LOG_LEVEL` are optional.
 
 ## API routes (current)
 - `GET /` and `GET /version`

@@ -24,64 +24,64 @@ func New(app *okapi.Okapi, cli *okapicli.CLI) (*Config, error) {
 	port := cli.GetInt("port")
 	cfg := &Config{
 		Database: DatabaseConfig{
-			dbHost:     goutils.Env("DB_HOST", "localhost"),
-			dbUser:     goutils.Env("DB_USER", "goma-admin"),
-			dbPassword: goutils.Env("DB_PASSWORD", "goma-admin"),
-			dbName:     goutils.Env("DB_NAME", "goma-admin"),
-			dbPort:     goutils.EnvInt("DB_PORT", 5432),
-			dbSslMode:  goutils.Env("DB_SSL_MODE", "disable"),
+			dbHost:     goutils.Env("GOMA_DB_HOST", "localhost"),
+			dbUser:     goutils.Env("GOMA_DB_USER", "goma-admin"),
+			dbPassword: goutils.Env("GOMA_DB_PASSWORD", "goma-admin"),
+			dbName:     goutils.Env("GOMA_DB_NAME", "goma-admin"),
+			dbPort:     goutils.EnvInt("GOMA_DB_PORT", 5432),
+			dbSslMode:  goutils.Env("GOMA_DB_SSL_MODE", "disable"),
 		},
 		Redis: RedisConfig{
-			URL: goutils.Env("REDIS_URL", "redis://localhost:6379/0"),
+			URL: goutils.Env("GOMA_REDIS_URL", "redis://localhost:6379/0"),
 		},
 		Server: ServerConfig{
-			enableDocs:  goutils.EnvBool("ENABLE_DOCS", true),
-			Port:        goutils.EnvInt("PORT", port),
-			Environment: goutils.Env("ENVIRONMENT", "development"),
+			enableDocs:  goutils.EnvBool("GOMA_ENABLE_DOCS", true),
+			Port:        goutils.EnvInt("GOMA_PORT", port),
+			Environment: goutils.Env("GOMA_ENVIRONMENT", "development"),
 		},
 		Cors: CorsConfig{
-			AllowedOrigins: strings.Split(goutils.Env("CORS_ALLOWED_ORIGINS", "http://localhost:5173"), ","),
+			AllowedOrigins: strings.Split(goutils.Env("GOMA_CORS_ALLOWED_ORIGINS", "http://localhost:5173"), ","),
 		},
 		JWT: JWTConfig{
-			Secret:          goutils.Env("JWT_SECRET", "default-secret-key"),
-			Issuer:          goutils.Env("JWT_ISSUER", "goma-admin"),
-			Audience:        goutils.Env("JWT_AUDIENCE", "goma-admin"),
-			AccessTokenTTL:  envDuration("JWT_ACCESS_TOKEN_TTL", "15m"),
-			RefreshTokenTTL: envDuration("JWT_REFRESH_TOKEN_TTL", "168h"),
+			Secret:          goutils.Env("GOMA_JWT_SECRET", "default-secret-key"),
+			Issuer:          goutils.Env("GOMA_JWT_ISSUER", "goma-admin"),
+			Audience:        goutils.Env("GOMA_JWT_AUDIENCE", "goma-admin"),
+			AccessTokenTTL:  envDuration("GOMA_JWT_ACCESS_TOKEN_TTL", "15m"),
+			RefreshTokenTTL: envDuration("GOMA_JWT_REFRESH_TOKEN_TTL", "168h"),
 		},
 		Auth: AuthConfig{
-			AllowFirstAdmin:      goutils.EnvBool("AUTH_ALLOW_FIRST_ADMIN", false),
-			RequireVerifiedEmail: goutils.EnvBool("AUTH_REQUIRE_VERIFIED_EMAIL", false),
+			AllowFirstAdmin:      goutils.EnvBool("GOMA_AUTH_ALLOW_FIRST_ADMIN", false),
+			RequireVerifiedEmail: goutils.EnvBool("GOMA_AUTH_REQUIRE_VERIFIED_EMAIL", false),
 			PasswordPolicy: PasswordPolicyConfig{
-				MinLength:      goutils.EnvInt("PASSWORD_MIN_LENGTH", 12),
-				MaxLength:      goutils.EnvInt("PASSWORD_MAX_LENGTH", 128),
-				RequireUpper:   goutils.EnvBool("PASSWORD_REQUIRE_UPPER", true),
-				RequireLower:   goutils.EnvBool("PASSWORD_REQUIRE_LOWER", true),
-				RequireNumber:  goutils.EnvBool("PASSWORD_REQUIRE_NUMBER", true),
-				RequireSpecial: goutils.EnvBool("PASSWORD_REQUIRE_SPECIAL", true),
+				MinLength:      goutils.EnvInt("GOMA_PASSWORD_MIN_LENGTH", 12),
+				MaxLength:      goutils.EnvInt("GOMA_PASSWORD_MAX_LENGTH", 128),
+				RequireUpper:   goutils.EnvBool("GOMA_PASSWORD_REQUIRE_UPPER", true),
+				RequireLower:   goutils.EnvBool("GOMA_PASSWORD_REQUIRE_LOWER", true),
+				RequireNumber:  goutils.EnvBool("GOMA_PASSWORD_REQUIRE_NUMBER", true),
+				RequireSpecial: goutils.EnvBool("GOMA_PASSWORD_REQUIRE_SPECIAL", true),
 			},
 			OAuth: OAuthConfig{
 				Google: OAuthProviderConfig{
-					ClientID:     goutils.Env("OAUTH_GOOGLE_CLIENT_ID", ""),
-					ClientSecret: goutils.Env("OAUTH_GOOGLE_CLIENT_SECRET", ""),
-					RedirectURL:  goutils.Env("OAUTH_GOOGLE_REDIRECT_URL", ""),
-					AuthURL:      goutils.Env("OAUTH_GOOGLE_AUTH_URL", ""),
-					TokenURL:     goutils.Env("OAUTH_GOOGLE_TOKEN_URL", ""),
-					UserInfoURL:  goutils.Env("OAUTH_GOOGLE_USERINFO_URL", ""),
+					ClientID:     goutils.Env("GOMA_OAUTH_GOOGLE_CLIENT_ID", ""),
+					ClientSecret: goutils.Env("GOMA_OAUTH_GOOGLE_CLIENT_SECRET", ""),
+					RedirectURL:  goutils.Env("GOMA_OAUTH_GOOGLE_REDIRECT_URL", ""),
+					AuthURL:      goutils.Env("GOMA_OAUTH_GOOGLE_AUTH_URL", ""),
+					TokenURL:     goutils.Env("GOMA_OAUTH_GOOGLE_TOKEN_URL", ""),
+					UserInfoURL:  goutils.Env("GOMA_OAUTH_GOOGLE_USERINFO_URL", ""),
 				},
 				GitHub: OAuthProviderConfig{
-					ClientID:     goutils.Env("OAUTH_GITHUB_CLIENT_ID", ""),
-					ClientSecret: goutils.Env("OAUTH_GITHUB_CLIENT_SECRET", ""),
-					RedirectURL:  goutils.Env("OAUTH_GITHUB_REDIRECT_URL", ""),
-					AuthURL:      goutils.Env("OAUTH_GITHUB_AUTH_URL", ""),
-					TokenURL:     goutils.Env("OAUTH_GITHUB_TOKEN_URL", ""),
-					UserInfoURL:  goutils.Env("OAUTH_GITHUB_USERINFO_URL", ""),
-					EmailsURL:    goutils.Env("OAUTH_GITHUB_EMAILS_URL", ""),
+					ClientID:     goutils.Env("GOMA_OAUTH_GITHUB_CLIENT_ID", ""),
+					ClientSecret: goutils.Env("GOMA_OAUTH_GITHUB_CLIENT_SECRET", ""),
+					RedirectURL:  goutils.Env("GOMA_OAUTH_GITHUB_REDIRECT_URL", ""),
+					AuthURL:      goutils.Env("GOMA_OAUTH_GITHUB_AUTH_URL", ""),
+					TokenURL:     goutils.Env("GOMA_OAUTH_GITHUB_TOKEN_URL", ""),
+					UserInfoURL:  goutils.Env("GOMA_OAUTH_GITHUB_USERINFO_URL", ""),
+					EmailsURL:    goutils.Env("GOMA_OAUTH_GITHUB_EMAILS_URL", ""),
 				},
 			},
 		},
 		Log: LogConfig{
-			Level: goutils.Env("LOG_LEVEL", "info"),
+			Level: goutils.Env("GOMA_LOG_LEVEL", "info"),
 		},
 	}
 	if err := cfg.initialize(app); err != nil {
@@ -92,13 +92,13 @@ func New(app *okapi.Okapi, cli *okapicli.CLI) (*Config, error) {
 }
 func (c *Config) validate() error {
 	if c.Redis.URL == "" {
-		return fmt.Errorf("REDIS_URL is required")
+		return fmt.Errorf("GOMA_REDIS_URL is required")
 	}
 	if c.Server.Port == 0 {
-		return fmt.Errorf("PORT is required")
+		return fmt.Errorf("GOMA_PORT is required")
 	}
 	if c.JWT.Secret == "" {
-		return fmt.Errorf("JWT_SECRET is required")
+		return fmt.Errorf("GOMA_JWT_SECRET is required")
 	}
 	return nil
 }
