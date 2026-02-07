@@ -89,7 +89,9 @@ const handleResend = async () => {
 
       <div v-else>
         <div class="flex flex-col items-center gap-2 text-center mb-4">
+        <NuxtLink to="/">
           <img src="/favicon.ico" class="h-16 w-16 sm:h-20 sm:w-20" alt="Logo" />
+        </NuxtLink>
           <h2 class="text-lg font-semibold text-surface-900 dark:text-surface-0">Forgot Password?</h2>
           <p class="text-sm text-surface-700 dark:text-surface-200 px-2">
             Enter your email address and we’ll send you a link to reset your password.

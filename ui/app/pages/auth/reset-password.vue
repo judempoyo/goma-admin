@@ -75,7 +75,9 @@ const handleSubmit = async ({ valid, values }:any) => {
       <div class="w-full max-w-md p-6 sm:p-8 rounded-2xl bg-surface-0 dark:bg-surface-900 shadow-md flex flex-col gap-6">
 
         <div class="flex flex-col items-center gap-2 text-center mb-4">
+          <NuxtLink to="/">
           <img src="/favicon.ico" class="h-16 w-16 sm:h-20 sm:w-20" alt="Logo" />
+        </NuxtLink>
           <h2 class="text-lg font-semibold text-surface-900 dark:text-surface-0">Set a New Password</h2>
           <p class="text-sm text-surface-700 dark:text-surface-200 px-2">
             Choose a strong password (minimum 8 characters). Confirm your password below.
