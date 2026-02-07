@@ -10,6 +10,7 @@ function toggleDarkMode() {
 </script>
 
 <template>
+    <ClientOnly>
   <div >
     <Button
       type="button"
@@ -21,4 +22,5 @@ function toggleDarkMode() {
         : 'pi pi-sun'"
     />
   </div>
+    </ClientOnly>
 </template>
