@@ -13,6 +13,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
             return navigateTo(from.fullPath);
         }
 
-        return navigateTo("/dashboard");
+        return navigateTo("/");
     }
 })
