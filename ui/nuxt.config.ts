@@ -8,7 +8,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       appUrl: '', 
-      apiUrl: ''
+      apiUrl: '',
+      appName: '',
+      appVersion:''
     }
   },
   modules: [
@@ -39,6 +41,11 @@ export default defineNuxtConfig({
     plugins: [
       tailwindcss(),
     ],
+  },
+  nitro: {
+    routeRules: {
+      '/_nuxt/**': { cors: true }
+    }
   },
   pinia: {
     storesDirs: ['./stores/**'],
