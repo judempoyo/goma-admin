@@ -5,13 +5,13 @@ const config = useRuntimeConfig()
 const route = useRoute();
 
 const menuItems = [
-  { label: "Dashboard", icon: "pi pi-home", to: "/" },
-  { label: "Routes", icon: "pi pi-compass", to: "/routes" },
-  { label: "Middlewares", icon: "pi pi-filter", to: "/middlewares" },
-  { label: "Instances", icon: "pi pi-server", to: "/instances" },
-  { label: "Analytics", icon: "pi pi-chart-line", to: "/analytics" },
-  { label: "Configuration", icon: "pi pi-cog", to: "/configuration" },
-  { label: "History", icon: "pi pi-history", to: "/history" },
+  { label: "common.dashboard", icon: "pi pi-home", to: "/" },
+  { label: "common.routes", icon: "pi pi-compass", to: "/routes" },
+  { label: "common.middlewares", icon: "pi pi-filter", to: "/middlewares" },
+  { label: "common.instances", icon: "pi pi-server", to: "/instances" },
+  { label: "common.analytics", icon: "pi pi-chart-line", to: "/analytics" },
+  { label: "common.configuration", icon: "pi pi-cog", to: "/configuration" },
+  { label: "common.history", icon: "pi pi-history", to: "/history" },
 ];
 
 function isActive(path: string) {
@@ -39,7 +39,7 @@ function isActive(path: string) {
           : 'hover:bg-primary/10 hover:text-primary'"
       >
         <i :class="item.icon" class="text-lg" />
-        <span class="text-sm font-medium">{{ item.label }}</span>
+        <span class="text-sm font-medium">{{ $t(item.label) }}</span>
       </RouterLink>
     </nav>
     

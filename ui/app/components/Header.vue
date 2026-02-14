@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { toggleSidebar, openMobileDrawer } from "@/composables/useLayout";
+const { t } = useI18n();
 
 
 const userMenu = ref();
 const notifications = ref(3);
 
 const userItems = [
-  { label: "Profile", icon: "pi pi-user" },
-  { label: "Settings", icon: "pi pi-cog" },
+  { label: t("common.profile"), icon: "pi pi-user" },
+  { label: t("common.settings"), icon: "pi pi-cog" },
   { separator: true },
-  { label: "Logout", icon: "pi pi-sign-out" },
+  { label: t("common.logout"), icon: "pi pi-sign-out" },
 ];
 
 function toggleUserMenu(event: Event) {
@@ -37,7 +38,7 @@ function handleToggleSidebar() {
             text
             rounded
             size="small"
-            aria-label="Toggle sidebar"
+            aria-label="common.toggle_sidebar"
             @click="handleToggleSidebar "
             class="lg:hidden text-primary-contrast! hover:bg-white/10!"
           />
@@ -49,12 +50,13 @@ function handleToggleSidebar() {
       <template #end>
         <div class="flex items-center gap-1 sm:gap-2">
           <ThemeToggle variant="toolbar" />
+          <LanguageSwitcher />
 
           <Button
             text
             rounded
             size="small"
-            aria-label="Notifications"
+            aria-label="common.notifications"
             class="text-primary-contrast! hover:bg-white/10!"
           >
             <span class="relative inline-flex">
@@ -73,7 +75,7 @@ function handleToggleSidebar() {
             text
             rounded
             size="small"
-            aria-label="User menu"
+            aria-label="common.user_menu"
             aria-haspopup="true"
             aria-controls="user_menu"
             @click="toggleUserMenu"

@@ -4,13 +4,13 @@ import { sidebarOpen } from "@/composables/useLayout";
 const route = useRoute();
 
 const menuItems = [
-  { label: "Dashboard", icon: "pi pi-home", to: "/" },
-  { label: "Routes", icon: "pi pi-compass", to: "/routes" },
-  { label: "Middlewares", icon: "pi pi-filter", to: "/middlewares" },
-  { label: "Instances", icon: "pi pi-server", to: "/instances" },
-  { label: "Analytics", icon: "pi pi-chart-line", to: "/analytics" },
-  { label: "Configuration", icon: "pi pi-cog", to: "/configuration" },
-  { label: "History", icon: "pi pi-history", to: "/history" },
+  { label: "common.dashboard", icon: "pi pi-home", to: "/" },
+  { label: "common.routes", icon: "pi pi-compass", to: "/routes" },
+  { label: "common.middlewares", icon: "pi pi-filter", to: "/middlewares" },
+  { label: "common.instances", icon: "pi pi-server", to: "/instances" },
+  { label: "common.analytics", icon: "pi pi-chart-line", to: "/analytics" },
+  { label: "common.configuration", icon: "pi pi-cog", to: "/configuration" },
+  { label: "common.history", icon: "pi pi-history", to: "/history" },
 ];
 
 const sidebarWidth = computed(() =>
@@ -36,7 +36,7 @@ function isActive(path: string) {
         v-for="item in menuItems"
         :key="item.to"
         :to="item.to"
-        v-tooltip="!sidebarOpen ? item.label : undefined"
+        v-tooltip="!sidebarOpen ? $t(item.label) : undefined"
         class="group relative flex items-center gap-3 px-3 py-2 rounded-md
                transition-all duration-200"
         :class="[
@@ -63,7 +63,7 @@ function isActive(path: string) {
           v-if="sidebarOpen"
           class="text-sm font-medium whitespace-nowrap"
         >
-          {{ item.label }}
+          {{ $t(item.label) }}
         </span>
       </RouterLink>
     </nav>
