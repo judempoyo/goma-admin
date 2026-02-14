@@ -91,10 +91,6 @@ const handleSubmit = async ({ valid, values }:any) => {
             <Checkbox v-model="checked" id="rememberme" binary class="mr-2" />
             <label for="rememberme">Remember me</label>
           </div>
-          <NuxtLink
-            to="/auth/forgot-password"
-            class="text-primary font-medium text-sm text-center hover:underline mt-2 sm:mt-0"
-          >Forgot password?</NuxtLink>
         </div>
 
         <Button type="submit" severity="primary" label="Sign In" :loading="loading" class="w-full rounded-full py-3 text-lg" />
