@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CustomBreadcumb from "~/components/CustomBreadcumb.vue";
 import RightPanel from "~/components/RightPanel.vue";
 </script>
 
@@ -17,6 +18,7 @@ import RightPanel from "~/components/RightPanel.vue";
         'lg:ml-16': !sidebarOpen,
       }"
     >
+      <CustomBreadcumb />
       <div class="p-4">
         <slot />
       </div>
