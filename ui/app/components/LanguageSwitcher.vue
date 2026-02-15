@@ -9,7 +9,7 @@ const languageItems = computed(() => {
     code: l.code,
     command: () => {
       locale.value = l.code;
-    }
+    },
   }));
 });
 
@@ -33,27 +33,28 @@ function toggleMenu(event: Event) {
       <span class="text-[11px] font-bold uppercase tracking-tighter">
         {{ locale }}
       </span>
-     
     </Button>
 
-    <Menu 
-      ref="menu" 
-      id="language_menu" 
-      :model="languageItems" 
+    <Menu
+      ref="menu"
+      id="language_menu"
+      :model="languageItems"
       :popup="true"
+      :pt="{
+        root: {
+          class: 'min-w-0! w-32',
+        },
+        itemLink: { class: 'py-1 px-2' },
+      }"
     >
       <template #item="{ item, props }">
-        <a v-bind="props.action" class="flex items-center gap-2 px-1.5 py-1.5">
-          <span class="text-[10px] font-mono bg-surface-100 dark:bg-surface-800 px-1 rounded uppercase">
-            {{ item.code }}
-          </span>
-          <span class="text-sm">{{ item.label }}</span>
+        <a v-bind="props.action" class="flex items-center gap-2">
+          <span class="text-[10px] uppercase">{{ item.code }}</span>
+          <span class="text-xs truncate">{{ item.label }}</span>
         </a>
       </template>
     </Menu>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

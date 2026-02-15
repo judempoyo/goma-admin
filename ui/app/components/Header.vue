@@ -2,7 +2,6 @@
 import { toggleSidebar, openMobileDrawer } from "@/composables/useLayout";
 const { t } = useI18n();
 
-
 const userMenu = ref();
 const notifications = ref(3);
 
@@ -24,8 +23,6 @@ function handleToggleSidebar() {
     toggleSidebar();
   }
 }
-
-
 </script>
 
 <template>
@@ -39,7 +36,7 @@ function handleToggleSidebar() {
             rounded
             size="small"
             aria-label="common.toggle_sidebar"
-            @click="handleToggleSidebar "
+            @click="handleToggleSidebar"
             class="lg:hidden text-primary-contrast! hover:bg-white/10!"
           />
 
@@ -84,7 +81,26 @@ function handleToggleSidebar() {
             <i class="pi pi-user text-base" />
           </Button>
 
-          <Menu ref="userMenu" :model="userItems" id="user_menu" :popup="true" />
+          <Menu
+            ref="userMenu"
+            :model="userItems"
+            id="user_menu"
+            :popup="true"
+            :pt="{
+              root: {
+                class: 'min-w-0! w-32',
+              },
+              itemLabel: {
+                class: 'text-xs',
+              },
+              itemIcon: {
+                class: 'text-xs',
+              },
+              itemContent: {
+                class: 'py-1 px-2',
+              },
+            }"
+          />
         </div>
       </template>
     </Toolbar>

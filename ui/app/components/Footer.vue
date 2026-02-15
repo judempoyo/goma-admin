@@ -21,7 +21,7 @@ const footerClasses = computed(() => ({
 
     <div class="hidden md:flex text-xs text-surface-500">{{ config.public.appVersion }}</div>
 
-    <div class="flex gap-1 text-xs">
+    <div class="flex gap-1 text-[8px] sm:text-xs">
       <Button :label="$t('common.docs')" variant="link" size="small" />
       <Button :label="$t('common.support')" variant="link" size="small" />
       <Button :label="$t('common.github')" variant="link" size="small" />
